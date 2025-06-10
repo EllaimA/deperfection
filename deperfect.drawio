@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.3">
+  <diagram name="Page-1" id="6zRdG6JHseQhhgTulQmI">
+    <mxGraphModel dx="655" dy="386" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-1" value="目标" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="520" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-2" value="是什么" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-3" value="为什么做它" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="480" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-4" value="具体任务是什么" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-5" value="今天至少做到哪一步？" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="640" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-6" value="任务" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="280" y="330" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-7" value="时间" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="760" y="330" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-10" value="规定时间" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="720" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="XTSuB5Vk69Xy2UMJJlKH-11" target="XTSuB5Vk69Xy2UMJJlKH-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XTSuB5Vk69Xy2UMJJlKH-11" target="XTSuB5Vk69Xy2UMJJlKH-15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-11" value="能做完？" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1140" y="380" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XTSuB5Vk69Xy2UMJJlKH-12" target="XTSuB5Vk69Xy2UMJJlKH-19" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-12" value="温和时间暴露" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-14" value="完全不能" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1180" y="500" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1340" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-17" value="能" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1240" y="390" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XTSuB5Vk69Xy2UMJJlKH-19" target="XTSuB5Vk69Xy2UMJJlKH-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XTSuB5Vk69Xy2UMJJlKH-19" target="XTSuB5Vk69Xy2UMJJlKH-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-19" value="设定超小时间" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1340" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-21" value="A 关掉它，做别的事" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="520" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-22" value="B 再来一轮， 10分钟" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="600" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-23" value="&lt;p&gt;&lt;span style=&quot;font-size:12.0pt;line-height:&lt;br/&gt;115%;font-family:DengXian;mso-ascii-font-family:Aptos;mso-ascii-theme-font:&lt;br/&gt;minor-latin;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Aptos;&lt;br/&gt;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&lt;br/&gt;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:&lt;br/&gt;ZH-CN;mso-bidi-language:AR-SA&quot; lang=&quot;ZH-CN&quot;&gt;”今天我哪怕没写成，也陪了它一会儿。&lt;/span&gt;&lt;span style=&quot;font-size:&lt;br/&gt;12.0pt;line-height:115%;font-family:&amp;quot;Aptos&amp;quot;,sans-serif;mso-ascii-theme-font:&lt;br/&gt;minor-latin;mso-fareast-font-family:DengXian;mso-fareast-theme-font:minor-fareast;&lt;br/&gt;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&lt;br/&gt;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:&lt;br/&gt;ZH-CN;mso-bidi-language:AR-SA&quot;&gt;”&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="1740" y="560" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-27" value="&lt;p style=&quot;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;&lt;br/&gt;text-indent:.5in&quot; class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-family:DengXian;mso-ascii-font-family:&lt;br/&gt;Aptos;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;&lt;br/&gt;mso-hansi-font-family:Aptos;mso-hansi-theme-font:minor-latin&quot; lang=&quot;ZH-CN&quot;&gt;“我今天不需要完成，我只需要靠近。”&lt;/span&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="1740" y="640" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-28" value="复盘" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="2280" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-30" value="&lt;div&gt;&lt;span style=&quot;font-size:12.0pt;line-height:&lt;br/&gt;115%;font-family:DengXian;mso-ascii-font-family:Aptos;mso-ascii-theme-font:&lt;br/&gt;minor-latin;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Aptos;&lt;br/&gt;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&lt;br/&gt;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:&lt;br/&gt;ZH-CN;mso-bidi-language:AR-SA&quot; lang=&quot;ZH-CN&quot;&gt;今天我朝目标迈进了吗？（不论进度多少&lt;/span&gt;&lt;font face=&quot;DengXian&quot;&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="2160" y="360" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-31" value="&lt;div&gt;&lt;font face=&quot;DengXian&quot;&gt;我是如何避免卡在“想做得更好”而没动手的？&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="2160" y="440" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-32" value="引导语：&lt;span style=&quot;background-color: transparent;&quot;&gt;“我不是来表现得完美的，我是来完成任务的。”&lt;/span&gt;&lt;div&gt;“80%的完成，比0%的完美要有价值得多。”&lt;/div&gt;&lt;div&gt;“拖延不会让事情更好，只会让我更累。”&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2160" y="640" width="320" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-33" value="质量" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="690" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-34" value="C档（及格）：能交差，不至于失败。" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1140" y="920" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-35" value="A档（完美）：超出期望，有额外优化。" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1140" y="760" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-36" value="B档（够好）：满足要求，没大问题。" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1140" y="840" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-37" value="结果和测评" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1170" y="330" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-38" value="我有没有开始？" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="1120" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-39" value="我今天做了哪一步" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="1200" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-40" value="这比昨天有进步吗" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="1280" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-41" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="1040" as="sourcePoint" />
+            <mxPoint x="2040" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-42" value="完美主义" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="170" y="1060" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-43" value="任务导向" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-44" value="每天写 200 字日记，不求逻辑完美，只记录情绪或思考。" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="270" y="1390" width="380" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-45" value="预测" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="520" y="330" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-46" value="写下在意的一个“做得不够好”的地方，并反问：“它真的必须完美吗？" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2160" y="520" width="400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-47" value="&lt;div&gt;记录一次“我害怕做/说某事”的情境&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;" parent="1" vertex="1">
+          <mxGeometry x="440" y="400" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-48" value="今天我在哪件事上原谅了自己？" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2560" y="800" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-49" value="今天有没有哪件事“虽然不完美，但我还是完成了”？" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2560" y="720" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-50" value="&lt;div&gt;我今天表现出的“真实”是哪一刻？&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2560" y="880" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-52" value="最坏的后果" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="480" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="XTSuB5Vk69Xy2UMJJlKH-53" value="真实概率" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="560" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="F2QJmZC6v7SWS0u1oMc9-3" value="计时器" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="940" y="430" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="F2QJmZC6v7SWS0u1oMc9-4" value="信息和计时" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="940" y="330" width="80" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
