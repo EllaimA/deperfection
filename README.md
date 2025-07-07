@@ -54,12 +54,12 @@ This software is developed by **EllaimA** and is subject to specific licensing t
 ### Attribution Requirements
 Any use of this software must include:
 - Copyright notice in all interfaces and documentation
-- "Powered by EllaimA Technology" in user interfaces
+- "Developed by EllaimA" in user interfaces
 - Clear attribution to EllaimA as the original developer
 
 ## Disclaimer
 
-THIS SOFTWARE IS PROVIDED BY ELLAI A "AS IS" WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. ELLAI A SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM THE USE OF THIS SOFTWARE.
+THIS SOFTWARE IS PROVIDED BY ELLAIMA "AS IS" WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. ELLAI A SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM THE USE OF THIS SOFTWARE.
 
 ## Contact
 
