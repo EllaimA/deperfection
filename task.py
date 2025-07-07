@@ -4,24 +4,20 @@ class Analyze:
     def __init__(self):
         self.content = ""
         self.why = ""
-        # self.subgoals = ""
         self.baseline = ""
         self.time = ""
+
 class Prediction:
     def __init__(self):
         self.worst_result = ""
+        self.plan_b = ""
         self.probability = 0.5  
+
 class Result:
     def __init__(self):
         self.finished = False
-        # quality should be one of these: "A class", "B class", "C class"
-        self.quality = None  # Default is None, to be set later
+        self.quality = None
         self.task_duration = 0
-        # self.gentle_time_based_exposure = False
-
-# class GentleTimeBasedExposure:
-#     def __init__(self):
-#         self.affirmations = [""]
 
 class Review:
     def __init__(self):
@@ -39,8 +35,8 @@ class Task:
         self.prediction = Prediction()
         self.result = Result()
         self.review = Review()
-        self.work_notes = ""  # Initialize work notes
-        self.actual_time = "00:00:00"  # Initialize actual time
+        self.work_notes = ""
+        self.actual_time = "00:00:00"
 
     def to_dict(self):
         """
@@ -52,23 +48,22 @@ class Task:
                 "analyze": {
                     "content": self.analyze.content,
                     "why": self.analyze.why,
-                    # "subgoals": self.analyze.subgoals,
                     "baseline": self.analyze.baseline,
                     "time": self.analyze.time
                 },
                 "prediction": {
                     "worst_result": self.prediction.worst_result,
+                    "plan_b": self.prediction.plan_b,
                     "probability": self.prediction.probability
                 },
                 "result": {
                     "finished": self.result.finished,
                     "quality": self.result.quality,
-                    "task_duration": self.result.task_duration,
-                    # "gentle_time_based_exposure": self.result.gentle_time_based_exposure
+                    "task_duration": self.result.task_duration
                 },
                 "review": {
                     "affirmation": self.review.affirmation,
-                    "areas_for_improvement": self.review.areas_for_improvement,
+                    "areas_for_improvement": self.review.areas_for_improvement
                 }
             }
         }
@@ -86,25 +81,26 @@ class Task:
             cursor.execute("""
             INSERT INTO task (
                 analyze_content, analyze_why, analyze_baseline, analyze_time,
-                prediction_worst_result, prediction_probability,
+                prediction_worst_result, prediction_plan_b, prediction_probability,
                 result_finished, result_quality, result_task_duration,
                 review_affirmation, review_areas_for_improvement,
                 work_notes, actual_time
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 self.analyze.content,
                 self.analyze.why,
                 self.analyze.baseline,
                 self.analyze.time,
                 self.prediction.worst_result,
+                self.prediction.plan_b,
                 self.prediction.probability,
-                int(self.result.finished),  # Convert boolean to integer
+                int(self.result.finished),
                 self.result.quality,
                 self.result.task_duration,
                 self.review.affirmation,
                 self.review.areas_for_improvement,
-                getattr(self, 'work_notes', ''),  # Get work_notes if exists, otherwise empty string
-                getattr(self, 'actual_time', '00:00:00')  # Get actual_time if exists, otherwise default
+                getattr(self, 'work_notes', ''),
+                getattr(self, 'actual_time', '00:00:00')
             ))
 
             conn.commit()

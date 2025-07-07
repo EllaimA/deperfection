@@ -1,37 +1,6 @@
-import json
 import sqlite3
 from task import Task
 
-def tabel_task():
-    # Define the structure of the task table
-    task_template = {
-        "task": {
-            "analyze": {
-                "content": "",
-                "why": "",
-                # "subgoals": "",
-                "baseline": "",
-                "time": ""
-            },
-            "prediction": {
-                "worst_result": "",
-                "probability": ""
-            },
-            "result": {
-                "finished": False,
-                "quality": "",  # A class / B class / C class
-                "task_duration": '',
-                "gentle_time_based_exposure": ""  # on / off
-            },
-            "review": {
-                "affirmation": "",
-                "areas_for_improvement": "",
-            }
-        }
-    }
-    return task_template
-
-@staticmethod
 def load_from_database(task_id, db_path="database.db"):
     """
     Load a task from the SQLite database by its ID.
@@ -52,18 +21,19 @@ def load_from_database(task_id, db_path="database.db"):
             task.analyze.baseline = row[3]
             task.analyze.time = row[4]
             task.prediction.worst_result = row[5]
-            task.prediction.probability = row[6]
-            task.result.finished = bool(row[7])
-            task.result.quality = row[8]
-            task.result.task_duration = row[9]
-            task.review.affirmation = row[10]
-            task.review.areas_for_improvement = row[11]
-            if len(row) > 12:  # Check if work_notes field exists
-                task.work_notes = row[12] if row[12] else ""
+            task.prediction.plan_b = row[6] if len(row) > 6 and row[6] else ""
+            task.prediction.probability = row[7] if len(row) > 7 else 0.5
+            task.result.finished = bool(row[8]) if len(row) > 8 else False
+            task.result.quality = row[9] if len(row) > 9 else None
+            task.result.task_duration = row[10] if len(row) > 10 else 0
+            task.review.affirmation = row[11] if len(row) > 11 else ""
+            task.review.areas_for_improvement = row[12] if len(row) > 12 else ""
+            if len(row) > 13:
+                task.work_notes = row[13] if row[13] else ""
             else:
                 task.work_notes = ""
-            if len(row) > 13:  # Check if actual_time field exists
-                task.actual_time = row[13] if row[13] else "00:00:00"
+            if len(row) > 14:
+                task.actual_time = row[14] if row[14] else "00:00:00"
             else:
                 task.actual_time = "00:00:00"
             return task
@@ -91,6 +61,7 @@ def initialize_database(db_path="database.db"):
         analyze_baseline TEXT,
         analyze_time TEXT,
         prediction_worst_result TEXT,
+        prediction_plan_b TEXT,
         prediction_probability REAL,
         result_finished INTEGER,
         result_quality TEXT,

@@ -12,6 +12,11 @@ def migrate_database(db_path="database.db"):
         cursor.execute("PRAGMA table_info(task)")
         columns = [column[1] for column in cursor.fetchall()]
         
+        # Add plan_b column if it doesn't exist
+        if 'prediction_plan_b' not in columns:
+            cursor.execute("ALTER TABLE task ADD COLUMN prediction_plan_b TEXT DEFAULT ''")
+            print("Added prediction_plan_b column to task table")
+        
         # Add work_notes column if it doesn't exist
         if 'work_notes' not in columns:
             cursor.execute("ALTER TABLE task ADD COLUMN work_notes TEXT DEFAULT ''")

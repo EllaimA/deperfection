@@ -64,11 +64,11 @@ def main():
     
     # 创建导航按钮，当前页面使用不同的显示方式
     pages = [
-        ("📊 Analyze", "Analyze"),
-        ("🔮 Prediction", "Prediction"),
-        ("🚀 Work", "Work"),
-        ("✅ Result", "Result"),
-        ("📝 Review", "Review")
+        ("Analyze", "Analyze"),
+        ("Prediction", "Prediction"),
+        ("Work", "Work"),
+        ("Result", "Result"),
+        ("Review", "Review")
     ]
     
     for icon_text, page_name in pages:

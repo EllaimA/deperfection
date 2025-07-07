@@ -63,7 +63,7 @@ def prediction_page():
     task = st.session_state.task # 获取 session 中的 task
 
     # 显示分析页面的信息
-    st.subheader("📋 分析回顾")
+    st.subheader("分析回顾")
     
     # 创建一个展开的区域显示分析信息
     with st.expander("查看分析详情", expanded=True):
@@ -91,20 +91,23 @@ def prediction_page():
             
             st.write("**计划时间:**")
             if task.analyze.time:
-                st.info(f"⏰ {task.analyze.time}")
+                st.info(f"计划时间: {task.analyze.time}")
             else:
                 st.write("*未设置*")
     
     st.divider()
     
     # 预测部分
-    st.subheader("🔮 预测分析")
+    st.subheader("预测分析")
     
     # 初始化widget状态
     if "worst_result_input" not in st.session_state:
         st.session_state.worst_result_input = task.prediction.worst_result
+    if "plan_b_input" not in st.session_state:
+        st.session_state.plan_b_input = task.prediction.plan_b
 
     task.prediction.worst_result = st.text_input("Worst Result", value=st.session_state.worst_result_input, key="worst_result_input")
+    task.prediction.plan_b = st.text_input("Plan B", value=st.session_state.plan_b_input, key="plan_b_input")
 
     # 初始化session state中的probability值
     if "prediction_probability_widget" not in st.session_state:
@@ -119,16 +122,17 @@ def prediction_page():
 
     # 实时同步所有字段到task对象
     task.prediction.worst_result = st.session_state.worst_result_input
+    task.prediction.plan_b = st.session_state.plan_b_input
 
     if st.button("Begin Task", key="begin_task_button"):
-        st.success("Task started! Good luck! 🚀")
+        st.success("Task started! Good luck!")
         st.session_state.current_page = "Work"
         st.rerun()
 
 
 
 def work_page():
-    st.title("🚀 Work in Progress")
+    st.title("Work in Progress")
     task = st.session_state.task # 获取 session 中的 task
     
     # 自动刷新（每 1 秒）- 只在计时器运行时启用
@@ -136,11 +140,15 @@ def work_page():
         st_autorefresh(interval=1000, key="timer_refresh")
     
     # 显示任务概要
-    st.subheader("📝 当前任务")
+    st.subheader("当前任务")
     if task.analyze.content:
         st.info(f"**任务内容**: {task.analyze.content}")
     else:
         st.warning("任务内容未填写")
+    
+    # 显示Plan B
+    if task.prediction.plan_b:
+        st.info(f"**Plan B**: {task.prediction.plan_b}")
     
     
     # 解析目标时间
@@ -160,7 +168,7 @@ def work_page():
                 
                 # 启动计时按钮 - 只能按一次
                 if not st.session_state.timer_running and st.session_state.timer_start_time is None:
-                    if st.button("▶️ 开始计时", key="start_timer"):
+                    if st.button("开始计时", key="start_timer"):
                         import time
                         st.session_state.timer_start_time = time.time()
                         st.session_state.timer_running = True
@@ -188,17 +196,9 @@ def work_page():
                         # 显示状态信息
                         st.success(f"工作中...")
                     else:
-                        st.success("🎉 时间到！任务完成！")
+                        st.success("时间到！任务完成！")
                         st.balloons()
                         st.session_state.timer_running = False
-                elif st.session_state.timer_start_time:
-                    import time
-                    elapsed_seconds = int(time.time() - st.session_state.timer_start_time)
-                    remaining_seconds = max(0, total_target_seconds - elapsed_seconds)
-                    hours = remaining_seconds // 3600
-                    minutes = (remaining_seconds % 3600) // 60
-                    seconds = remaining_seconds % 60
-                    st.markdown(f"### ⏸️ 暂停中: {hours:02d}:{minutes:02d}:{seconds:02d}")
                 else:
                     hours = target_hours
                     minutes = target_minutes
@@ -212,7 +212,7 @@ def work_page():
     st.divider()
     
     # 工作笔记
-    st.subheader("📝 工作笔记")
+    st.subheader("工作笔记")
     
     # 初始化笔记状态
     if "work_notes_input" not in st.session_state:
@@ -227,7 +227,7 @@ def work_page():
         key="work_notes_input",
         height=200,
         placeholder="在这里记录你的工作进展、遇到的问题、灵感想法等...",
-        help="💡 提示：计时过程中可以正常输入笔记，倒计时会自动更新显示"
+        help="提示：计时过程中可以正常输入笔记，倒计时会自动更新显示"
     )
     
     # 实时保存笔记到task对象
@@ -236,7 +236,7 @@ def work_page():
     st.divider()
     
     # 完成任务按钮
-    if st.button("✅ 完成任务", key="finish_work_button"):
+    if st.button("完成任务", key="finish_work_button"):
         # 计算实际花费时间
         if st.session_state.timer_start_time:
             import time
@@ -251,7 +251,7 @@ def work_page():
         # 停止计时器
         st.session_state.timer_running = False
         
-        st.success("任务执行完成！现在去记录结果吧 📊")
+        st.success("任务执行完成！现在去记录结果吧")
         st.session_state.current_page = "Result"
         st.rerun()
 
@@ -261,12 +261,12 @@ def result_page():
     st.title("Result")
     
     # 显示分析和预测页面的信息
-    st.subheader("📋 任务回顾")
+    st.subheader("任务回顾")
     
     # 创建一个展开的区域显示所有之前的信息
     with st.expander("查看完整任务信息", expanded=True):
         # 分析信息
-        st.write("### 📊 分析阶段")
+        st.write("### 分析阶段")
         col1, col2 = st.columns(2)
         
         with col1:
@@ -292,13 +292,19 @@ def result_page():
         st.divider()
         
         # 预测信息
-        st.write("### 🔮 预测阶段")
+        st.write("### 预测阶段")
         col3, col4 = st.columns(2)
         
         with col3:
             st.write("**最坏结果:**")
             if task.prediction.worst_result:
                 st.warning(task.prediction.worst_result)
+            else:
+                st.write("*未填写*")
+            
+            st.write("**Plan B:**")
+            if task.prediction.plan_b:
+                st.info(task.prediction.plan_b)
             else:
                 st.write("*未填写*")
         
@@ -313,27 +319,27 @@ def result_page():
         st.divider()
         
         # 工作阶段信息
-        st.write("### 🚀 工作阶段")
+        st.write("### 工作阶段")
         col5, col6 = st.columns(2)
         
         with col5:
             st.write("**计划时间:**")
             if task.analyze.time:
-                st.info(f"⏰ {task.analyze.time}")
+                st.info(f"计划时间: {task.analyze.time}")
             else:
                 st.write("*未设置*")
         
         with col6:
             st.write("**实际用时:**")
             if hasattr(task, 'actual_time') and task.actual_time:
-                st.success(f"⏱️ {task.actual_time}")
+                st.success(f"实际用时: {task.actual_time}")
             else:
                 st.write("*未记录*")
     
     st.divider()
     
     # 结果部分
-    st.subheader("✅ 结果记录")
+    st.subheader("结果记录")
     
     # Use a key for the selectbox to directly manage its state in st.session_state
     # Initialize if not present
@@ -427,6 +433,7 @@ def review_page():
         st.session_state.analyze_baseline_input = task.analyze.baseline
         st.session_state.analyze_time_widget = datetime.time(0, 0)
         st.session_state.worst_result_input = task.prediction.worst_result
+        st.session_state.plan_b_input = task.prediction.plan_b
         st.session_state.prediction_probability_widget = 0.5
         st.session_state.work_notes_input = ""  # 初始化工作笔记
         st.session_state.result_finished_selection = 1  # Default to "No"
