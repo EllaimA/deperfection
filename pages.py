@@ -13,24 +13,43 @@ def analyze_page():
     st.title("Analyze")
     task = st.session_state.task # 获取 session 中的 task
 
-    task.analyze.content = st.text_area("Task是什么?", task.analyze.content, key="analyze_content_input")
-    task.analyze.why = st.text_area("为什么要做这个task?", task.analyze.why, key="analyze_why_input")
-    task.analyze.baseline = st.text_area("这个task至少要做到哪一步?", task.analyze.baseline, key="analyze_baseline_input")
+    # 初始化widget状态
+    if "analyze_content_input" not in st.session_state:
+        st.session_state.analyze_content_input = task.analyze.content
+    if "analyze_why_input" not in st.session_state:
+        st.session_state.analyze_why_input = task.analyze.why
+    if "analyze_baseline_input" not in st.session_state:
+        st.session_state.analyze_baseline_input = task.analyze.baseline
+
+    task.analyze.content = st.text_area("Task是什么?", value=st.session_state.analyze_content_input, key="analyze_content_input")
+    task.analyze.why = st.text_area("为什么要做这个task?", value=st.session_state.analyze_why_input, key="analyze_why_input")
+    task.analyze.baseline = st.text_area("这个task至少要做到哪一步?", value=st.session_state.analyze_baseline_input, key="analyze_baseline_input")
 
     # --- 时间输入处理 ---
-    initial_datetime_obj_for_widget = None
-    if task.analyze.time:  # task.analyze.time 是 "HH:MM" 字符串或空串
-        try:
-            parts = task.analyze.time.split(':')
-            if len(parts) == 2:
-                hour, minute = int(parts[0]), int(parts[1])
-                initial_datetime_obj_for_widget = datetime.time(hour, minute)
-        except (ValueError, TypeError): # 解析失败
-            initial_datetime_obj_for_widget = None
+    # 初始化session state中的时间值
+    if "analyze_time_widget" not in st.session_state:
+        if task.analyze.time:  # task.analyze.time 是 "HH:MM" 字符串或空串
+            try:
+                parts = task.analyze.time.split(':')
+                if len(parts) == 2:
+                    hour, minute = int(parts[0]), int(parts[1])
+                    st.session_state.analyze_time_widget = datetime.time(hour, minute)
+                else:
+                    st.session_state.analyze_time_widget = datetime.time(0, 0)
+            except (ValueError, TypeError): # 解析失败
+                st.session_state.analyze_time_widget = datetime.time(0, 0)
+        else:
+            st.session_state.analyze_time_widget = datetime.time(0, 0)
 
-    selected_time_obj = st.time_input("时间", value=initial_datetime_obj_for_widget, key="analyze_time_input")
+    selected_time_obj = st.time_input("时间", value=st.session_state.analyze_time_widget, key="analyze_time_widget", step=60)
+    # 更新task中的时间值
     task.analyze.time = selected_time_obj.strftime("%H:%M") if selected_time_obj else ""
     # --- 时间输入处理结束 ---
+
+    # 实时同步所有字段到task对象
+    task.analyze.content = st.session_state.analyze_content_input
+    task.analyze.why = st.session_state.analyze_why_input
+    task.analyze.baseline = st.session_state.analyze_baseline_input
 
     if st.button("Update Analyze", key="update_analyze_button"):
         st.success("Analysis data updated successfully!")
@@ -42,15 +61,25 @@ def prediction_page():
     st.title("Prediction")
     task = st.session_state.task # 获取 session 中的 task
 
-    task.prediction.worst_result = st.text_input("Worst Result", task.prediction.worst_result, key="worst_result_input")
+    # 初始化widget状态
+    if "worst_result_input" not in st.session_state:
+        st.session_state.worst_result_input = task.prediction.worst_result
 
-    # 确保 probability 是浮点数
-    try:
-        current_probability_val = float(task.prediction.probability)
-    except (ValueError, TypeError): # 如果是空字符串或者None等无法转换的情况
-        current_probability_val = 0.5 # 给一个默认值
+    task.prediction.worst_result = st.text_input("Worst Result", value=st.session_state.worst_result_input, key="worst_result_input")
 
-    task.prediction.probability = st.slider("Probability", min_value=0.0, max_value=1.0, value=current_probability_val, step=0.05)
+    # 初始化session state中的probability值
+    if "prediction_probability_widget" not in st.session_state:
+        try:
+            st.session_state.prediction_probability_widget = float(task.prediction.probability)
+        except (ValueError, TypeError): # 如果是空字符串或者None等无法转换的情况
+            st.session_state.prediction_probability_widget = 0.5 # 给一个默认值
+
+    probability_value = st.slider("Probability", min_value=0.0, max_value=1.0, value=st.session_state.prediction_probability_widget, step=0.05, key="prediction_probability_widget")
+    # 更新task中的probability值
+    task.prediction.probability = probability_value
+
+    # 实时同步所有字段到task对象
+    task.prediction.worst_result = st.session_state.worst_result_input
 
     if st.button("Update Prediction", key="update_prediction_button"):
         st.success("Prediction data updated successfully!")
@@ -93,6 +122,9 @@ def result_page():
     # This will reflect the user's current choice in the selectbox
     task.result.quality = value_options[display_options.index(selected_display_option)]
 
+    # 实时同步所有字段到task对象
+    task.result.finished = st.session_state.result_finished_selection_widget == "Yes"
+
     if st.button("Update Result", key="update_result_button"):
         # The task.result.quality is already updated by the selectbox's interaction above
         # and task.result.finished is also updated.
@@ -106,8 +138,20 @@ def review_page():
     task = st.session_state.task
 
     st.title("Review")
-    task.review.affirmation = st.text_area("今天我朝目标迈进了吗？迈进了什么？", task.review.affirmation, key="review_affirmation_input")
-    task.review.areas_for_improvement = st.text_area("做得不够好的地方（最多写一个）", task.review.areas_for_improvement, key="review_areas_for_improvement_input")
+    
+    # 初始化widget状态
+    if "review_affirmation_input" not in st.session_state:
+        st.session_state.review_affirmation_input = task.review.affirmation
+    if "review_areas_for_improvement_input" not in st.session_state:
+        st.session_state.review_areas_for_improvement_input = task.review.areas_for_improvement
+    
+    task.review.affirmation = st.text_area("今天我朝目标迈进了吗？迈进了什么？", value=st.session_state.review_affirmation_input, key="review_affirmation_input")
+    task.review.areas_for_improvement = st.text_area("做得不够好的地方（最多写一个）", value=st.session_state.review_areas_for_improvement_input, key="review_areas_for_improvement_input")
+    
+    # 实时同步所有字段到task对象
+    task.review.affirmation = st.session_state.review_affirmation_input
+    task.review.areas_for_improvement = st.session_state.review_areas_for_improvement_input
+    
     st.write(f'*它真的必须完美吗？*')
 
     # Randomly select a cue from the Review.cue list
@@ -125,8 +169,19 @@ def review_page():
 
         # Clear Streamlit session state for all inputs
         for key in list(st.session_state.keys()):
-            if key not in ["task", "current_page"]:  # 保留必要的键
+            if key not in ["task", "current_page", "page_selector"]:  # 保留必要的键
                 del st.session_state[key]
 
+        # 重新初始化所有widget状态为新task的默认值
+        st.session_state.analyze_content_input = task.analyze.content
+        st.session_state.analyze_why_input = task.analyze.why
+        st.session_state.analyze_baseline_input = task.analyze.baseline
+        st.session_state.analyze_time_widget = datetime.time(0, 0)
+        st.session_state.worst_result_input = task.prediction.worst_result
+        st.session_state.prediction_probability_widget = 0.5
+        st.session_state.result_finished_selection = 1  # Default to "No"
+        st.session_state.review_affirmation_input = task.review.affirmation
+        st.session_state.review_areas_for_improvement_input = task.review.areas_for_improvement
+        
         st.session_state.current_page = "Analyze"
         st.rerun()
