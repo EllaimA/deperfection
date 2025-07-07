@@ -39,6 +39,8 @@ class Task:
         self.prediction = Prediction()
         self.result = Result()
         self.review = Review()
+        self.work_notes = ""  # Initialize work notes
+        self.actual_time = "00:00:00"  # Initialize actual time
 
     def to_dict(self):
         """
@@ -86,8 +88,9 @@ class Task:
                 analyze_content, analyze_why, analyze_baseline, analyze_time,
                 prediction_worst_result, prediction_probability,
                 result_finished, result_quality, result_task_duration,
-                review_affirmation, review_areas_for_improvement
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                review_affirmation, review_areas_for_improvement,
+                work_notes, actual_time
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 self.analyze.content,
                 self.analyze.why,
@@ -99,7 +102,9 @@ class Task:
                 self.result.quality,
                 self.result.task_duration,
                 self.review.affirmation,
-                self.review.areas_for_improvement
+                self.review.areas_for_improvement,
+                getattr(self, 'work_notes', ''),  # Get work_notes if exists, otherwise empty string
+                getattr(self, 'actual_time', '00:00:00')  # Get actual_time if exists, otherwise default
             ))
 
             conn.commit()

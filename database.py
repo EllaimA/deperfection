@@ -58,6 +58,14 @@ def load_from_database(task_id, db_path="database.db"):
             task.result.task_duration = row[9]
             task.review.affirmation = row[10]
             task.review.areas_for_improvement = row[11]
+            if len(row) > 12:  # Check if work_notes field exists
+                task.work_notes = row[12] if row[12] else ""
+            else:
+                task.work_notes = ""
+            if len(row) > 13:  # Check if actual_time field exists
+                task.actual_time = row[13] if row[13] else "00:00:00"
+            else:
+                task.actual_time = "00:00:00"
             return task
         else:
             print(f"No task found with ID {task_id}")
@@ -88,7 +96,9 @@ def initialize_database(db_path="database.db"):
         result_quality TEXT,
         result_task_duration TEXT,
         review_affirmation TEXT,
-        review_areas_for_improvement TEXT
+        review_areas_for_improvement TEXT,
+        work_notes TEXT,
+        actual_time TEXT
     )
     """)
 

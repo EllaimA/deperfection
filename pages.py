@@ -2,6 +2,7 @@ import streamlit as st
 import random
 from task import Task
 import datetime
+from streamlit_autorefresh import st_autorefresh
 
 # Use the Task object from session state
 if "task" not in st.session_state:
@@ -119,11 +120,140 @@ def prediction_page():
     # 实时同步所有字段到task对象
     task.prediction.worst_result = st.session_state.worst_result_input
 
-    if st.button("Update Prediction", key="update_prediction_button"):
-        st.success("Prediction data updated successfully!")
-        st.session_state.current_page = "Result"
+    if st.button("Begin Task", key="begin_task_button"):
+        st.success("Task started! Good luck! 🚀")
+        st.session_state.current_page = "Work"
         st.rerun()
 
+
+
+def work_page():
+    st.title("🚀 Work in Progress")
+    task = st.session_state.task # 获取 session 中的 task
+    
+    # 自动刷新（每 1 秒）- 只在计时器运行时启用
+    if st.session_state.get("timer_running", False):
+        st_autorefresh(interval=1000, key="timer_refresh")
+    
+    # 显示任务概要
+    st.subheader("📝 当前任务")
+    if task.analyze.content:
+        st.info(f"**任务内容**: {task.analyze.content}")
+    else:
+        st.warning("任务内容未填写")
+    
+    
+    # 解析目标时间
+    if task.analyze.time:
+        try:
+            parts = task.analyze.time.split(':')
+            if len(parts) == 2:
+                target_hours = int(parts[0])
+                target_minutes = int(parts[1])
+                total_target_seconds = target_hours * 3600 + target_minutes * 60
+                
+                # 初始化计时器状态
+                if "timer_start_time" not in st.session_state:
+                    st.session_state.timer_start_time = None
+                if "timer_running" not in st.session_state:
+                    st.session_state.timer_running = False
+                
+                # 启动计时按钮 - 只能按一次
+                if not st.session_state.timer_running and st.session_state.timer_start_time is None:
+                    if st.button("▶️ 开始计时", key="start_timer"):
+                        import time
+                        st.session_state.timer_start_time = time.time()
+                        st.session_state.timer_running = True
+                        st.rerun()
+
+                
+                # 显示倒计时
+                if st.session_state.timer_running and st.session_state.timer_start_time:
+                    import time
+                    elapsed_seconds = int(time.time() - st.session_state.timer_start_time)
+                    remaining_seconds = max(0, total_target_seconds - elapsed_seconds)
+                    
+                    if remaining_seconds > 0:
+                        hours = remaining_seconds // 3600
+                        minutes = (remaining_seconds % 3600) // 60
+                        seconds = remaining_seconds % 60
+                        
+                        # 大号显示剩余时间
+                        st.markdown(f"### {hours:02d}:{minutes:02d}:{seconds:02d}")
+                        
+                        # 进度条
+                        progress = (total_target_seconds - remaining_seconds) / total_target_seconds
+                        st.progress(progress)
+                        
+                        # 显示状态信息
+                        st.success(f"工作中...")
+                    else:
+                        st.success("🎉 时间到！任务完成！")
+                        st.balloons()
+                        st.session_state.timer_running = False
+                elif st.session_state.timer_start_time:
+                    import time
+                    elapsed_seconds = int(time.time() - st.session_state.timer_start_time)
+                    remaining_seconds = max(0, total_target_seconds - elapsed_seconds)
+                    hours = remaining_seconds // 3600
+                    minutes = (remaining_seconds % 3600) // 60
+                    seconds = remaining_seconds % 60
+                    st.markdown(f"### ⏸️ 暂停中: {hours:02d}:{minutes:02d}:{seconds:02d}")
+                else:
+                    hours = target_hours
+                    minutes = target_minutes
+                    st.markdown(f"### {hours:02d}:{minutes:02d}:00")
+                    
+        except (ValueError, TypeError):
+            st.error("时间格式错误")
+    else:
+        st.warning("未设置目标时间")
+    
+    st.divider()
+    
+    # 工作笔记
+    st.subheader("📝 工作笔记")
+    
+    # 初始化笔记状态
+    if "work_notes_input" not in st.session_state:
+        if hasattr(task, 'work_notes'):
+            st.session_state.work_notes_input = task.work_notes
+        else:
+            st.session_state.work_notes_input = ""
+    
+    work_notes = st.text_area(
+        "记录工作过程、想法、遇到的问题等...",
+        value=st.session_state.work_notes_input,
+        key="work_notes_input",
+        height=200,
+        placeholder="在这里记录你的工作进展、遇到的问题、灵感想法等...",
+        help="💡 提示：计时过程中可以正常输入笔记，倒计时会自动更新显示"
+    )
+    
+    # 实时保存笔记到task对象
+    task.work_notes = st.session_state.work_notes_input
+    
+    st.divider()
+    
+    # 完成任务按钮
+    if st.button("✅ 完成任务", key="finish_work_button"):
+        # 计算实际花费时间
+        if st.session_state.timer_start_time:
+            import time
+            actual_time_seconds = int(time.time() - st.session_state.timer_start_time)
+            actual_hours = actual_time_seconds // 3600
+            actual_minutes = (actual_time_seconds % 3600) // 60
+            actual_seconds = actual_time_seconds % 60
+            task.actual_time = f"{actual_hours:02d}:{actual_minutes:02d}:{actual_seconds:02d}"
+        else:
+            task.actual_time = "00:00:00"
+        
+        # 停止计时器
+        st.session_state.timer_running = False
+        
+        st.success("任务执行完成！现在去记录结果吧 📊")
+        st.session_state.current_page = "Result"
+        st.rerun()
 
 
 def result_page():
@@ -158,12 +288,6 @@ def result_page():
                 st.info(task.analyze.why)
             else:
                 st.write("*未填写*")
-            
-            st.write("**计划时间:**")
-            if task.analyze.time:
-                st.info(f"⏰ {task.analyze.time}")
-            else:
-                st.write("*未设置*")
         
         st.divider()
         
@@ -185,6 +309,26 @@ def result_page():
                 st.metric("概率", f"{prob_percent:.1f}%")
             else:
                 st.write("*未设置*")
+        
+        st.divider()
+        
+        # 工作阶段信息
+        st.write("### 🚀 工作阶段")
+        col5, col6 = st.columns(2)
+        
+        with col5:
+            st.write("**计划时间:**")
+            if task.analyze.time:
+                st.info(f"⏰ {task.analyze.time}")
+            else:
+                st.write("*未设置*")
+        
+        with col6:
+            st.write("**实际用时:**")
+            if hasattr(task, 'actual_time') and task.actual_time:
+                st.success(f"⏱️ {task.actual_time}")
+            else:
+                st.write("*未记录*")
     
     st.divider()
     
@@ -284,6 +428,7 @@ def review_page():
         st.session_state.analyze_time_widget = datetime.time(0, 0)
         st.session_state.worst_result_input = task.prediction.worst_result
         st.session_state.prediction_probability_widget = 0.5
+        st.session_state.work_notes_input = ""  # 初始化工作笔记
         st.session_state.result_finished_selection = 1  # Default to "No"
         st.session_state.review_affirmation_input = task.review.affirmation
         st.session_state.review_areas_for_improvement_input = task.review.areas_for_improvement

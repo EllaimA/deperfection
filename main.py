@@ -1,5 +1,5 @@
 import streamlit as st
-from pages import analyze_page, prediction_page, result_page, review_page
+from pages import analyze_page, prediction_page, work_page, result_page, review_page
 from task import Task
 from database import initialize_database
 
@@ -22,6 +22,10 @@ def sync_widget_states_to_task():
         task.prediction.worst_result = st.session_state.worst_result_input
     if "prediction_probability_widget" in st.session_state:
         task.prediction.probability = st.session_state.prediction_probability_widget
+    
+    # 同步work页面的输入
+    if "work_notes_input" in st.session_state:
+        task.work_notes = st.session_state.work_notes_input
     
     # 同步result页面的输入
     if "result_finished_selection_widget" in st.session_state:
@@ -61,7 +65,8 @@ def main():
     # 创建导航按钮，当前页面使用不同的显示方式
     pages = [
         ("📊 Analyze", "Analyze"),
-        ("🔮 Prediction", "Prediction"), 
+        ("🔮 Prediction", "Prediction"),
+        ("🚀 Work", "Work"),
         ("✅ Result", "Result"),
         ("📝 Review", "Review")
     ]
@@ -91,6 +96,9 @@ def main():
 
     elif st.session_state.current_page == "Prediction":
         prediction_page()
+
+    elif st.session_state.current_page == "Work":
+        work_page()
 
     elif st.session_state.current_page == "Result":
         result_page()
