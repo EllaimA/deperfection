@@ -61,6 +61,44 @@ def prediction_page():
     st.title("Prediction")
     task = st.session_state.task # 获取 session 中的 task
 
+    # 显示分析页面的信息
+    st.subheader("📋 分析回顾")
+    
+    # 创建一个展开的区域显示分析信息
+    with st.expander("查看分析详情", expanded=True):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("**Task内容:**")
+            if task.analyze.content:
+                st.info(task.analyze.content)
+            else:
+                st.write("*未填写*")
+            
+            st.write("**基线要求:**")
+            if task.analyze.baseline:
+                st.info(task.analyze.baseline)
+            else:
+                st.write("*未填写*")
+        
+        with col2:
+            st.write("**目标原因:**")
+            if task.analyze.why:
+                st.info(task.analyze.why)
+            else:
+                st.write("*未填写*")
+            
+            st.write("**计划时间:**")
+            if task.analyze.time:
+                st.info(f"⏰ {task.analyze.time}")
+            else:
+                st.write("*未设置*")
+    
+    st.divider()
+    
+    # 预测部分
+    st.subheader("🔮 预测分析")
+    
     # 初始化widget状态
     if "worst_result_input" not in st.session_state:
         st.session_state.worst_result_input = task.prediction.worst_result
@@ -91,6 +129,68 @@ def prediction_page():
 def result_page():
     task = st.session_state.task # 获取 session 中的 task
     st.title("Result")
+    
+    # 显示分析和预测页面的信息
+    st.subheader("📋 任务回顾")
+    
+    # 创建一个展开的区域显示所有之前的信息
+    with st.expander("查看完整任务信息", expanded=True):
+        # 分析信息
+        st.write("### 📊 分析阶段")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("**Task内容:**")
+            if task.analyze.content:
+                st.info(task.analyze.content)
+            else:
+                st.write("*未填写*")
+            
+            st.write("**基线要求:**")
+            if task.analyze.baseline:
+                st.info(task.analyze.baseline)
+            else:
+                st.write("*未填写*")
+        
+        with col2:
+            st.write("**目标原因:**")
+            if task.analyze.why:
+                st.info(task.analyze.why)
+            else:
+                st.write("*未填写*")
+            
+            st.write("**计划时间:**")
+            if task.analyze.time:
+                st.info(f"⏰ {task.analyze.time}")
+            else:
+                st.write("*未设置*")
+        
+        st.divider()
+        
+        # 预测信息
+        st.write("### 🔮 预测阶段")
+        col3, col4 = st.columns(2)
+        
+        with col3:
+            st.write("**最坏结果:**")
+            if task.prediction.worst_result:
+                st.warning(task.prediction.worst_result)
+            else:
+                st.write("*未填写*")
+        
+        with col4:
+            st.write("**发生概率:**")
+            if task.prediction.probability is not None:
+                prob_percent = task.prediction.probability * 100
+                st.metric("概率", f"{prob_percent:.1f}%")
+            else:
+                st.write("*未设置*")
+    
+    st.divider()
+    
+    # 结果部分
+    st.subheader("✅ 结果记录")
+    
     # Use a key for the selectbox to directly manage its state in st.session_state
     # Initialize if not present
     if "result_finished_selection" not in st.session_state:
@@ -99,28 +199,33 @@ def result_page():
     finished_selection = st.selectbox("Finished", ["Yes", "No"], index=st.session_state.result_finished_selection, key="result_finished_selection_widget")
     task.result.finished = finished_selection == "Yes"
 
+    # 如果选择了"No"，则Quality显示为"未完成"且不可修改
+    if finished_selection == "No":
+        st.text_input("Quality", value="未完成", disabled=True, key="quality_disabled")
+        task.result.quality = "未完成"
+    else:
+        # 如果选择了"Yes"，则显示正常的Quality选择框
+        display_options = ["A class: 超出期望，有额外优化", "B class: 满足要求，没大问题", "C class: 能交差，不至于失败"]
+        value_options = ["A class", "B class", "C class"]
 
-    display_options = ["A class: 超出期望，有额外优化", "B class: 满足要求，没大问题", "C class: 能交差，不至于失败"]
-    value_options = ["A class", "B class", "C class"]
+        # Helper to get current index for the selectbox
+        try:
+            # If task.result.quality is None or not in value_options on a new task, handle it.
+            current_quality_index = value_options.index(task.result.quality) if task.result.quality in value_options else 0
+        except ValueError:
+            current_quality_index = 0 # Default if somehow task.result.quality is invalid
 
-    # Helper to get current index for the selectbox
-    try:
-        # If task.result.quality is None or not in value_options on a new task, handle it.
-        current_quality_index = value_options.index(task.result.quality) if task.result.quality in value_options else 0
-    except ValueError:
-        current_quality_index = 0 # Default if somehow task.result.quality is invalid
+        # The selectbox value will be one of display_options
+        selected_display_option = st.selectbox(
+            "Quality",
+            display_options,
+            index=current_quality_index,
+            key="quality_selectbox" # Give it a unique key
+        )
 
-    # The selectbox value will be one of display_options
-    selected_display_option = st.selectbox(
-        "Quality",
-        display_options,
-        index=current_quality_index,
-        key="quality_selectbox" # Give it a unique key
-    )
-
-    # Update task.result.quality based on the selection from the widget
-    # This will reflect the user's current choice in the selectbox
-    task.result.quality = value_options[display_options.index(selected_display_option)]
+        # Update task.result.quality based on the selection from the widget
+        # This will reflect the user's current choice in the selectbox
+        task.result.quality = value_options[display_options.index(selected_display_option)]
 
     # 实时同步所有字段到task对象
     task.result.finished = st.session_state.result_finished_selection_widget == "Yes"

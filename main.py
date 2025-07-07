@@ -26,7 +26,11 @@ def sync_widget_states_to_task():
     # 同步result页面的输入
     if "result_finished_selection_widget" in st.session_state:
         task.result.finished = st.session_state.result_finished_selection_widget == "Yes"
-    if "quality_selectbox" in st.session_state:
+        # 如果选择了"No"，则quality自动设置为"未完成"
+        if not task.result.finished:
+            task.result.quality = "未完成"
+    if "quality_selectbox" in st.session_state and task.result.finished:
+        # 只有在finished为True时才处理quality选择框
         display_options = ["A class: 超出期望，有额外优化", "B class: 满足要求，没大问题", "C class: 能交差，不至于失败"]
         value_options = ["A class", "B class", "C class"]
         if st.session_state.quality_selectbox in display_options:
